@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.menuDisciplina">
+   <children>
+      <TabPane prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #3E6D9C;" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab style="-fx-background-color: #3E6D9C; -fx-border-color: transparent; -fx-text-fill: white;" text="Adauga disciplina">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" layoutX="77.0" layoutY="47.0" prefHeight="22.0" prefWidth="222.0" text="Introdu numele Disciplinei">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font></Label>
+                        <TextField fx:id="textNume" layoutX="77.0" layoutY="92.0" prefHeight="25.0" prefWidth="222.0" promptText="name" style="-fx-background-radius: 20;" />
+                        <Label alignment="CENTER" layoutX="77.0" layoutY="147.0" prefHeight="22.0" prefWidth="222.0" text="Introdu sala de Curs">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textCurs" layoutX="77.0" layoutY="192.0" prefHeight="25.0" prefWidth="222.0" promptText="Ex. A01" style="-fx-background-radius: 20;" />
+                        <Label alignment="CENTER" layoutX="77.0" layoutY="247.0" prefHeight="22.0" prefWidth="222.0" text="Introdu sala de Seminar">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textSeminar" layoutX="77.0" layoutY="292.0" prefHeight="25.0" prefWidth="222.0" promptText="Ex. 201" style="-fx-background-radius: 20;" />
+                        <Button layoutX="160.0" layoutY="347.0" mnemonicParsing="false" onAction="#addDisciplina" prefHeight="25.0" prefWidth="57.0" style="-fx-background-color: red; -fx-background-insets: 0; -fx-background-radius: 30; -fx-text-fill: white;" text="Adauga" />
+                        <ImageView fitHeight="522.0" fitWidth="252.0" layoutX="401.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-29.0" AnchorPane.leftAnchor="371.0" AnchorPane.rightAnchor="-22.0" AnchorPane.topAnchor="-2.0">
+                           <image>
+                              <Image url="@Images/books.jpg" />
+                           </image>
+                           <effect>
+                              <DropShadow radius="13.75" width="36.0" />
+                           </effect>
+                        </ImageView>
+                     </children></AnchorPane>
+            </content>
+               <graphic>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/plus.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+          </Tab>
+          <Tab style="-fx-background-color: #3E6D9C; -fx-border-color: transparent; -fx-text-fill: white;" text="Lista discipline">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tabelDiscipline" prefHeight="471.0" prefWidth="600.0" style="-fx-background-color: #3E6D9C;">
+                          <columns>
+                            <TableColumn fx:id="numeDisciplina" prefWidth="200.0" text="Nume" />
+                            <TableColumn fx:id="cursDisciplina" prefWidth="200.0" text="Sala Curs" />
+                              <TableColumn fx:id="seminarDisciplina" prefWidth="200.0" text="Sala Seminar" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+            </content>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/book.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+          </Tab>
+            <Tab style="-fx-background-color: #3E6D9C; -fx-border-color: transparent; -fx-text-fill: white;" text="Sterge disciplina">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" layoutX="30.0" layoutY="151.0" prefHeight="22.0" prefWidth="307.0" text="Selecteaza Disciplina pe care s-o stergi">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="alegeDeleteDisciplina" layoutX="30.0" layoutY="200.0" prefHeight="25.0" prefWidth="307.0" style="-fx-background-radius: 20;" />
+                        <Button layoutX="155.0" layoutY="276.0" mnemonicParsing="false" onAction="#deleteDisciplina" prefHeight="25.0" prefWidth="57.0" style="-fx-background-color: red; -fx-background-insets: 0; -fx-background-radius: 30; -fx-text-fill: white;" text="Sterge" />
+                        <ImageView fitHeight="522.0" fitWidth="252.0" layoutX="401.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-29.8302001953125" AnchorPane.leftAnchor="371.0" AnchorPane.rightAnchor="-23.0" AnchorPane.topAnchor="-2.0">
+                           <image>
+                              <Image url="@Images/books.jpg" />
+                           </image>
+                           <effect>
+                              <DropShadow radius="13.75" width="36.0" />
+                           </effect>
+                        </ImageView>
+                     </children></AnchorPane>
+              </content>
+               <graphic>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/minus.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
