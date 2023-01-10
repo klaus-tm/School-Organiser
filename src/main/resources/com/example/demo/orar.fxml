@@ -1,14 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import jfxtras.scene.control.agenda.Agenda?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.menuOrar">
    <children>
-      <Label layoutX="207.0" layoutY="192.0" text="WORK IN PROGRESS">
-         <font>
-            <Font size="18.0" />
-         </font></Label>
+      <TabPane prefHeight="506.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab style="-fx-border-color: transparent; -fx-text-fill: white; -fx-background-color: #5F8D4E;" text="Adauga ora">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: CCD6A6; -fx-border-color: transparent;">
+                     <children>
+                        <Label alignment="CENTER" layoutX="91.0" layoutY="36.0" prefHeight="22.0" text="Selecteaza profesor">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="alegeProfesor" layoutX="86.0" layoutY="66.0" prefWidth="165.0" style="-fx-background-radius: 20;" />
+                        <Label alignment="CENTER" layoutX="84.0" layoutY="106.0" text="Selecteaza disciplina">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="alegeDisciplina" layoutX="84.0" layoutY="136.0" prefWidth="165.0" style="-fx-background-radius: 20;" />
+                        <Label alignment="CENTER" layoutX="106.0" layoutY="176.0" text="Selecteaza sala">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="alegeSala" layoutX="105.0" layoutY="206.0" prefWidth="123.0" style="-fx-background-radius: 20;" />
+                        <ImageView fitHeight="708.0" fitWidth="628.0" layoutX="371.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="371.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@Images/schedule.jpg" />
+                           </image>
+                           <effect>
+                              <DropShadow height="28.0" radius="15.5" width="36.0" />
+                           </effect>
+                        </ImageView>
+                        <Label alignment="CENTER" layoutX="106.0" layoutY="246.0" prefHeight="22.0" prefWidth="122.0" text="Selecteaza ziua">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="alegeZi" layoutX="106.0" layoutY="276.0" prefWidth="122.0" style="-fx-background-radius: 20;" />
+                        <Label alignment="CENTER" layoutX="69.0" layoutY="316.0" prefHeight="22.0" prefWidth="200.0" text="Selecteaza intervalul orar">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="alegeOra" layoutX="69.0" layoutY="346.0" prefWidth="200.0" style="-fx-background-radius: 20;" />
+                        <Button alignment="CENTER" layoutX="140.0" layoutY="387.0" mnemonicParsing="false" onAction="#addScedule" style="-fx-background-color: red; -fx-background-radius: 20; -fx-text-fill: white;" text="Adauga" />
+                     </children>
+                  </AnchorPane>
+            </content>
+               <graphic>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/plus.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+          </Tab>
+          <Tab style="-fx-background-color: #5F8D4E; -fx-text-fill: white; -fx-border-color: transparent;" text="Vizualizare orar">
+               <content>
+                  <AnchorPane prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ToolBar layoutY="-6.0" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: CCD6A6;">
+                          <items>
+                              <Button mnemonicParsing="false" onAction="#deleteSchedule" style="-fx-background-color: red; -fx-background-radius: 30; -fx-text-fill: white;" text="Sterge orar" />
+                          </items>
+                        </ToolBar>
+                        <Agenda fx:id="orar" layoutY="34.0" prefHeight="441.0" prefWidth="600.0" style="-fx-background-color: CCD6A6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="34.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
-</Pane>
+</AnchorPane>

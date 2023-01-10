@@ -2,10 +2,7 @@ package com.example.demo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -62,7 +59,10 @@ public class menuDisciplina implements Initializable {
             }
             statementNumeDiscipline.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Probleme boss");
+            alert.setHeaderText("A intervenit o problema! Operatiunea a fost anulata!");
+            alert.showAndWait();
         }
     }
 
@@ -76,47 +76,100 @@ public class menuDisciplina implements Initializable {
     }
 
     public void addDisciplina(ActionEvent actionEvent) {
-        try {
-            DatabaseConnection connection = new DatabaseConnection();
-            Connection connectdb = connection.getConnection();
-            PreparedStatement querry = connectdb.prepareStatement("insert into disciplina(Nume, SalaCurs, SalaSeminar) values (?, ?, ?)");
-            querry.setString(1, textNume.getText());
-            querry.setString(2, textCurs.getText());
-            querry.setString(3, textSeminar.getText());
-            querry.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(textNume.getText().isBlank() || textSeminar.getText().isBlank()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Probleme boss");
+            alert.setHeaderText("N-ai introdus toate datele necesare!");
+            alert.showAndWait();
+
+            tabelDiscipline.getItems().clear();
+            alegeDeleteDisciplina.getItems().clear();
+            textNume.clear(); textCurs.clear(); textSeminar.clear();
+            generareTabelSiChoice();
         }
-        tabelDiscipline.getItems().clear();
-        alegeDeleteDisciplina.getItems().clear();
-        textNume.clear(); textCurs.clear(); textSeminar.clear();
-        generareTabelSiChoice();
+        else {
+            try {
+                DatabaseConnection connection = new DatabaseConnection();
+                Connection connectdb = connection.getConnection();
+                PreparedStatement querry = connectdb.prepareStatement("insert into disciplina(Nume, SalaCurs, SalaSeminar) values (?, ?, ?)");
+                querry.setString(1, textNume.getText());
+                querry.setString(2, textCurs.getText());
+                querry.setString(3, textSeminar.getText());
+                querry.executeUpdate();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Felicitari boss");
+                alert.setHeaderText("Disciplina a fost adaugata!");
+                alert.showAndWait();
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Probleme boss");
+                alert.setHeaderText("A intervenit o problema! Operatiunea a fost anulata!");
+                alert.showAndWait();
+            }
+
+            tabelDiscipline.getItems().clear();
+            alegeDeleteDisciplina.getItems().clear();
+            textNume.clear(); textCurs.clear(); textSeminar.clear();
+            generareTabelSiChoice();
+        }
     }
 
     public void deleteDisciplina(ActionEvent actionEvent) {
-        try {
-            DatabaseConnection connectionDisciplina = new DatabaseConnection();
-            Connection connectdbDisciplina = connectionDisciplina.getConnection();
-            Statement statementDisciplina = connectdbDisciplina.createStatement();
-            String querryDisciplina = "delete from disciplina where Nume = '" + alegeDeleteDisciplina.getValue() + "'";
-            statementDisciplina.executeUpdate(querryDisciplina);
+        if(alegeDeleteDisciplina.getSelectionModel().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Probleme boss");
+            alert.setHeaderText("N-ai selectat tot ce trebuia!");
+            alert.showAndWait();
 
-            DatabaseConnection connectionTema = new DatabaseConnection();
-            Connection connectdbTema = connectionTema.getConnection();
-            Statement statementTema = connectdbTema.createStatement();
-            String querryTema = "delete from tema where Disciplina = '" + alegeDeleteDisciplina.getValue() + "'";
-            statementTema.executeUpdate(querryTema);
-
-            DatabaseConnection connectionNota = new DatabaseConnection();
-            Connection connectdbNota = connectionNota.getConnection();
-            Statement statementNota = connectdbNota.createStatement();
-            String querryNota = "delete from nota where Disciplina = '" + alegeDeleteDisciplina.getValue() + "'";
-            statementNota.executeUpdate(querryNota);
-        } catch (Exception e) {
-            e.printStackTrace();
+            tabelDiscipline.getItems().clear();
+            alegeDeleteDisciplina.getItems().clear();
+            generareTabelSiChoice();
         }
-        tabelDiscipline.getItems().clear();
-        alegeDeleteDisciplina.getItems().clear();
-        generareTabelSiChoice();
+        else{
+            try {
+                DatabaseConnection connectionOrar = new DatabaseConnection();
+                Connection connectdbOrar = connectionOrar.getConnection();
+                Statement statementOrar = connectdbOrar.createStatement();
+                String querryOrar = "delete from orar where Disciplina = '" + alegeDeleteDisciplina.getValue() + "'";
+                statementOrar.executeUpdate(querryOrar);
+                statementOrar.close();
+
+                DatabaseConnection connectionDisciplina = new DatabaseConnection();
+                Connection connectdbDisciplina = connectionDisciplina.getConnection();
+                Statement statementDisciplina = connectdbDisciplina.createStatement();
+                String querryDisciplina = "delete from disciplina where Nume = '" + alegeDeleteDisciplina.getValue() + "'";
+                statementDisciplina.executeUpdate(querryDisciplina);
+                statementDisciplina.close();
+
+                DatabaseConnection connectionTema = new DatabaseConnection();
+                Connection connectdbTema = connectionTema.getConnection();
+                Statement statementTema = connectdbTema.createStatement();
+                String querryTema = "delete from tema where Disciplina = '" + alegeDeleteDisciplina.getValue() + "'";
+                statementTema.executeUpdate(querryTema);
+                statementTema.close();
+
+                DatabaseConnection connectionNota = new DatabaseConnection();
+                Connection connectdbNota = connectionNota.getConnection();
+                Statement statementNota = connectdbNota.createStatement();
+                String querryNota = "delete from nota where Disciplina = '" + alegeDeleteDisciplina.getValue() + "'";
+                statementNota.executeUpdate(querryNota);
+                statementNota.close();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Felicitari boss");
+                alert.setHeaderText("Disciplina, temele, notele si orele la disciplina respectiva au fost sterse!");
+                alert.showAndWait();
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Probleme boss");
+                alert.setHeaderText("A intervenit o problema! Operatiunea a fost anulata!");
+                alert.showAndWait();
+            }
+
+            tabelDiscipline.getItems().clear();
+            alegeDeleteDisciplina.getItems().clear();
+            generareTabelSiChoice();
+        }
     }
 }

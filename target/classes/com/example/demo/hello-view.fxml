@@ -13,7 +13,7 @@
 
 <BorderPane prefHeight="550.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
    <top>
-      <Pane prefHeight="52.0" prefWidth="780.0" style="-fx-background-color: FFEBAD;" BorderPane.alignment="CENTER">
+      <Pane prefHeight="52.0" prefWidth="780.0" style="-fx-background-color: #FFFBE9;" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="14.0" layoutY="13.0" text="UVTOrganiser">
                <font>
@@ -32,36 +32,36 @@
       </Pane>
    </top>
    <left>
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #A5F1E9;" BorderPane.alignment="CENTER">
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: F4EAD5;" BorderPane.alignment="CENTER">
          <children>
             <VBox prefHeight="227.0" prefWidth="200.0">
                <children>
-                  <JFXButton fx:id="menuHome" onAction="#home" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #7FE9DE;" text="Home">
+                  <JFXButton fx:id="menuHome" onAction="#home" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: F4EAD5;" text="Home">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="menuProf" onAction="#profesor" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #7FE9DE;" text="Profesori">
+                  <JFXButton fx:id="menuProf" onAction="#profesor" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: F4EAD5;" text="Profesori">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="menuDisciplina" onAction="#disciplina" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #7FE9DE;" text="Discipline">
+                  <JFXButton fx:id="menuDisciplina" onAction="#disciplina" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: F4EAD5;" text="Discipline">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="menuTema" onAction="#tema" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #7FE9DE;" text="Teme">
+                  <JFXButton fx:id="menuTema" onAction="#tema" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: F4EAD5;" text="Teme">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="menuNota" onAction="#nota" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #7FE9DE;" text="Note">
+                  <JFXButton fx:id="menuNota" onAction="#nota" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: F4EAD5;" text="Note">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="menuOrar" onAction="#orar" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #7FE9DE;" text="Orar">
+                  <JFXButton fx:id="menuOrar" onAction="#orar" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: F4EAD5;" text="Orar">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -74,7 +74,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <StackPane fx:id="contentArea" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: FFF6BF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <StackPane fx:id="contentArea" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: F4EAD5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </center>

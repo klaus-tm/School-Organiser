@@ -2,10 +2,7 @@ package com.example.demo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.*;
@@ -59,7 +56,10 @@ public class menuProfesor implements Initializable {
             }
             statementNumeProfesori.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Probleme boss");
+            alert.setHeaderText("A intervenit o problema! Operatiunea a fost anulata!");
+            alert.showAndWait();
         }
     }
 
@@ -73,35 +73,87 @@ public class menuProfesor implements Initializable {
     }
 
     public void addProf(ActionEvent actionEvent) {
-        try {
-            DatabaseConnection connection = new DatabaseConnection();
-            Connection connectdb = connection.getConnection();
-            PreparedStatement querry = connectdb.prepareStatement("insert into profesor(Nume, Mail, Telefon) values (?, ?, ?)");
-            querry.setString(1, textNume.getText());
-            querry.setString(2, textMail.getText());
-            querry.setString(3, textTelefon.getText());
-            querry.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(textNume.getText().isBlank() || textMail.getText().isBlank() || textTelefon.getText().isBlank()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Probleme boss");
+            alert.setHeaderText("N-ai introdus toate datele necesare!");
+            alert.showAndWait();
+
+            tabelProfesori.getItems().clear();
+            alegeProfesor.getItems().clear();
+            textNume.clear(); textMail.clear(); textTelefon.clear();
+            generareTabelSiChoice();
         }
-        tabelProfesori.getItems().clear();
-        alegeProfesor.getItems().clear();
-        textNume.clear(); textMail.clear(); textTelefon.clear();
-        generareTabelSiChoice();
+        else{
+            try {
+                DatabaseConnection connection = new DatabaseConnection();
+                Connection connectdb = connection.getConnection();
+                PreparedStatement querry = connectdb.prepareStatement("insert into profesor(Nume, Mail, Telefon) values (?, ?, ?)");
+                querry.setString(1, textNume.getText());
+                querry.setString(2, textMail.getText());
+                querry.setString(3, textTelefon.getText());
+                querry.executeUpdate();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Felicitari boss");
+                alert.setHeaderText("Profesorul a fost adaugat!");
+                alert.showAndWait();
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Probleme boss");
+                alert.setHeaderText("A intervenit o problema! Operatiunea a fost anulata!");
+                alert.showAndWait();
+            }
+
+
+
+            tabelProfesori.getItems().clear();
+            alegeProfesor.getItems().clear();
+            textNume.clear(); textMail.clear(); textTelefon.clear();
+            generareTabelSiChoice();
+        }
     }
 
     public void deleteProf(ActionEvent actionEvent) {
-        try {
-            DatabaseConnection connection = new DatabaseConnection();
-            Connection connectdb = connection.getConnection();
-            Statement statement = connectdb.createStatement();
-            String querry = "delete from profesor where Nume = '" + alegeProfesor.getValue() + "'";
-            statement.executeUpdate(querry);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(alegeProfesor.getSelectionModel().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Probleme boss");
+            alert.setHeaderText("N-ai selectat tot ce trebuia!");
+            alert.showAndWait();
+
+            tabelProfesori.getItems().clear();
+            alegeProfesor.getItems().clear();
+            generareTabelSiChoice();
         }
-        tabelProfesori.getItems().clear();
-        alegeProfesor.getItems().clear();
-        generareTabelSiChoice();
+        else {
+            try {
+                DatabaseConnection connectionOrar = new DatabaseConnection();
+                Connection connectdbOrar = connectionOrar.getConnection();
+                Statement statementOrar = connectdbOrar.createStatement();
+                String querryOrar = "delete from orar where Profesor = '" + alegeProfesor.getValue() + "'";
+                statementOrar.executeUpdate(querryOrar);
+                statementOrar.close();
+
+                DatabaseConnection connection = new DatabaseConnection();
+                Connection connectdb = connection.getConnection();
+                Statement statement = connectdb.createStatement();
+                String querry = "delete from profesor where Nume = '" + alegeProfesor.getValue() + "'";
+                statement.executeUpdate(querry);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Felicitari boss");
+                alert.setHeaderText("Profesorul si disciplina unde preda au fost sterse!");
+                alert.showAndWait();
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Probleme boss");
+                alert.setHeaderText("A intervenit o problema! Operatiunea a fost anulata!");
+                alert.showAndWait();
+            }
+
+            tabelProfesori.getItems().clear();
+            alegeProfesor.getItems().clear();
+            generareTabelSiChoice();
+        }
     }
 }

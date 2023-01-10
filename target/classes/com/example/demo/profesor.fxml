@@ -19,9 +19,9 @@
    <children>
       <TabPane prefHeight="500.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab style="-fx-border-color: transparent; -fx-text-fill: white; -fx-background-color: #3E6D9C;" text="Adauga profesor">
+          <Tab style="-fx-border-color: transparent; -fx-text-fill: white; -fx-background-color: #5F8D4E;" text="Adauga profesor">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="469.0" prefWidth="598.0" style="-fx-background-color: #3E6D9C; -fx-border-color: transparent;">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="469.0" prefWidth="600.0" style="-fx-background-color: CCD6A6; -fx-border-color: transparent;">
                      <children>
                         <Label alignment="CENTER" layoutX="77.0" layoutY="47.0" prefHeight="22.0" prefWidth="222.0" text="Introdu numele Profesorului" textAlignment="CENTER">
                            <font>
@@ -42,9 +42,9 @@
                         </Label>
                         <TextField fx:id="textTelefon" layoutX="77.0" layoutY="292.0" prefHeight="25.0" prefWidth="222.0" promptText="07xxxxxxxx" style="-fx-background-radius: 20;" />
                         <Button alignment="CENTER" layoutX="160.0" layoutY="347.0" mnemonicParsing="false" onAction="#addProf" prefHeight="25.0" prefWidth="57.0" style="-fx-background-color: RED; -fx-background-insets: 0; -fx-background-radius: 30; -fx-text-fill: white;" text="Adauga" />
-                        <ImageView fitHeight="567.0" fitWidth="485.0" layoutX="371.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="371.0" AnchorPane.rightAnchor="-258.0" AnchorPane.topAnchor="-2.0">
+                        <ImageView fitHeight="517.0" fitWidth="307.0" layoutX="374.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-48.0" AnchorPane.leftAnchor="374.0" AnchorPane.rightAnchor="-75.0" AnchorPane.topAnchor="1.0">
                            <image>
-                              <Image url="@Images/people.jpg" />
+                              <Image url="@Images/Teacher.jpg" />
                            </image>
                            <cursor>
                               <Cursor fx:constant="DEFAULT" />
@@ -63,11 +63,11 @@
                   </ImageView>
                </graphic>
           </Tab>
-          <Tab style="-fx-background-color: #3E6D9C; -fx-border-color: transparent; -fx-text-fill: white;" text="Lista profesori">
+          <Tab style="-fx-background-color: #5F8D4E; -fx-border-color: transparent; -fx-text-fill: white;" text="Lista profesori">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tabelProfesori" prefHeight="471.0" prefWidth="600.0" style="-fx-background-color: #3E6D9C;">
+                        <TableView fx:id="tabelProfesori" prefHeight="471.0" prefWidth="600.0" style="-fx-background-color: CCD6A6;">
                           <columns>
                             <TableColumn fx:id="numeProfesor" prefWidth="200.0" text="Nume" />
                             <TableColumn fx:id="mailProfesor" prefWidth="200.0" text="Mail" />
@@ -84,11 +84,11 @@
                   </ImageView>
                </graphic>
           </Tab>
-            <Tab style="-fx-background-color: #3E6D9C; -fx-border-color: transparent; -fx-text-fill: white;" text="Sterge profesor">
+            <Tab style="-fx-background-color: #5F8D4E; -fx-border-color: transparent; -fx-text-fill: white;" text="Sterge profesor">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <AnchorPane prefHeight="469.0" prefWidth="600.0" style="-fx-background-color: #3E6D9C; -fx-border-color: transparent;">
+                        <AnchorPane prefHeight="469.0" prefWidth="600.0" style="-fx-background-color: CCD6A6; -fx-border-color: transparent;">
                            <children>
                               <ChoiceBox fx:id="alegeProfesor" layoutX="51.0" layoutY="200.0" prefHeight="25.0" prefWidth="275.0" style="-fx-background-radius: 20;" />
                               <Label alignment="CENTER" layoutX="51.0" layoutY="151.0" prefHeight="22.0" prefWidth="275.0" text="Alege Profesorul pe care sa-l stergi" textAlignment="CENTER">
@@ -99,9 +99,9 @@
                               <Button alignment="CENTER" layoutX="160.0" layoutY="276.0" mnemonicParsing="false" onAction="#deleteProf" prefHeight="25.0" prefWidth="57.0" style="-fx-background-color: RED; -fx-background-insets: 0; -fx-background-radius: 30; -fx-text-fill: white;" text="Sterge" />
                            </children>
                         </AnchorPane>
-                        <ImageView fitHeight="567.0" fitWidth="485.0" layoutX="372.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="517.0" fitWidth="307.0" layoutX="374.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-48.0" AnchorPane.leftAnchor="374.0" AnchorPane.rightAnchor="-75.0" AnchorPane.topAnchor="0.0">
                            <image>
-                              <Image url="@Images/people.jpg" />
+                              <Image url="@Images/Teacher.jpg" />
                            </image>
                            <cursor>
                               <Cursor fx:constant="DEFAULT" />

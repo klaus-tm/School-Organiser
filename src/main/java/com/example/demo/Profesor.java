@@ -3,6 +3,7 @@ package com.example.demo;
 public class Profesor {
     private String nume, mail, telefon;
 
+    public Profesor(){}
     public Profesor(String nume, String mail, String telefon){
         this.nume = nume;
         this.mail = mail;

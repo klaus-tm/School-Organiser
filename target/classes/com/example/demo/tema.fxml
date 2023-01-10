@@ -2,13 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -19,9 +19,9 @@
    <children>
       <TabPane prefHeight="500.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab style="-fx-background-color: #3E6D9C; -fx-border-color: transparent; -fx-text-fill: white;" text="Adauga tema">
+          <Tab style="-fx-background-color: #5F8D4E; -fx-border-color: transparent; -fx-text-fill: white;" text="Adauga tema">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #3E6D9C; -fx-border-color: transparent;">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: CCD6A6; -fx-border-color: transparent;">
                      <children>
                         <Label alignment="CENTER" layoutX="77.0" layoutY="47.0" prefHeight="22.0" prefWidth="222.0" text="Selecteaza Disciplina" textAlignment="CENTER">
                            <font>
@@ -35,12 +35,12 @@
                            </font>
                         </Label>
                         <TextArea fx:id="textDetalii" layoutX="77.0" layoutY="170.0" prefHeight="70.0" prefWidth="222.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" />
-                        <Label alignment="CENTER" layoutX="77.0" layoutY="247.0" prefHeight="22.0" prefWidth="222.0" text="Introdu termen Tema" textAlignment="CENTER">
+                        <Label alignment="CENTER" layoutX="77.0" layoutY="247.0" prefHeight="22.0" prefWidth="222.0" text="Selecteaza termen Tema" textAlignment="CENTER">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="16.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="textTermen" layoutX="77.0" layoutY="292.0" prefHeight="25.0" prefWidth="222.0" promptText="Ex. 25Dec" style="-fx-background-radius: 20;" />
+                        <DatePicker fx:id="alegeTermen" layoutX="78.0" layoutY="290.0" prefWidth="222.0" />
                         <Button alignment="CENTER" layoutX="160.0" layoutY="347.0" mnemonicParsing="false" onAction="#addTema" prefHeight="25.0" prefWidth="57.0" style="-fx-background-color: red; -fx-background-insets: 0; -fx-background-radius: 30; -fx-text-fill: white;" text="Adauga" />
                         <ImageView fitHeight="470.0" fitWidth="515.0" layoutX="373.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="371.0" AnchorPane.rightAnchor="-258.0" AnchorPane.topAnchor="-1.0">
                            <image>
@@ -60,16 +60,16 @@
                   </ImageView>
                </graphic>
           </Tab>
-          <Tab style="-fx-background-color: #3E6D9C; -fx-border-color: transparent; -fx-text-fill: white;" text="Teme curente">
+          <Tab style="-fx-background-color: #5F8D4E; -fx-border-color: transparent; -fx-text-fill: white;" text="Teme curente">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tabelTeme" prefHeight="471.0" prefWidth="600.0" style="-fx-background-color: #3E6D9C;">
+                        <TableView fx:id="tabelTeme" prefHeight="471.0" prefWidth="600.0" style="-fx-background-color: CCD6A6;">
                           <columns>
-                            <TableColumn fx:id="disciplinaTema" prefWidth="150.0" text="Disciplina" />
-                            <TableColumn fx:id="detaliiTema" prefWidth="150.0" text="Detalii Tema" />
-                              <TableColumn fx:id="termenTema" prefWidth="150.0" text="Termen Tema" />
-                              <TableColumn fx:id="terminataTema" prefWidth="150.0" text="Terminata?" />
+                            <TableColumn fx:id="disciplinaTema" prefWidth="150.0" resizable="false" text="Disciplina" />
+                            <TableColumn fx:id="detaliiTema" prefWidth="150.0" resizable="false" text="Detalii Tema" />
+                              <TableColumn fx:id="termenTema" prefWidth="150.0" resizable="false" text="Termen Tema" />
+                              <TableColumn fx:id="terminataTema" prefWidth="150.0" resizable="false" text="Terminata?" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
@@ -82,9 +82,9 @@
                   </ImageView>
                </graphic>
           </Tab>
-            <Tab style="-fx-background-color: #3E6D9C; -fx-border-color: transparent; -fx-text-fill: white;" text="Termina tema">
+            <Tab style="-fx-background-color: #5F8D4E; -fx-border-color: transparent; -fx-text-fill: white;" text="Termina tema">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #3E6D9C; -fx-border-color: transparent;">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: CCD6A6; -fx-border-color: transparent;">
                      <children>
                         <Label alignment="CENTER" layoutX="9.0" layoutY="104.0" prefHeight="22.0" prefWidth="354.0" text="Selecteaza Disciplina Temei pe care o termini" textAlignment="CENTER">
                            <font>
@@ -92,12 +92,11 @@
                            </font>
                         </Label>
                         <ChoiceBox fx:id="alegeDeleteDisciplina" layoutX="13.0" layoutY="140.0" prefHeight="22.0" prefWidth="344.0" style="-fx-background-radius: 20;" />
-                        <Label alignment="CENTER" layoutX="19.0" layoutY="204.0" prefHeight="22.0" prefWidth="322.0" text="Introdu Termenul Temei pe care o termini" textAlignment="CENTER">
+                        <Label alignment="CENTER" layoutX="66.0" layoutY="205.0" prefHeight="22.0" prefWidth="228.0" text="Alege Tema pe care o termini" textAlignment="CENTER">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="16.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="textDeleteTermen" layoutX="19.0" layoutY="240.0" prefHeight="25.0" prefWidth="322.0" promptText="Ex. 25Dec" style="-fx-background-radius: 20;" />
                         <Button alignment="CENTER" layoutX="151.0" layoutY="290.0" mnemonicParsing="false" onAction="#deleteTema" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: red; -fx-background-insets: 0; -fx-background-radius: 30; -fx-text-fill: white;" text="Termina" />
                         <ImageView fitHeight="470.0" fitWidth="515.0" layoutX="373.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="371.0" AnchorPane.rightAnchor="-258.0" AnchorPane.topAnchor="-1.0">
                            <image>
@@ -107,6 +106,7 @@
                               <DropShadow radius="13.75" width="36.0" />
                            </effect>
                         </ImageView>
+                        <ChoiceBox fx:id="alegeDeleteTema" layoutX="66.0" layoutY="235.0" prefHeight="25.0" prefWidth="228.0" style="-fx-background-radius: 20;" />
                      </children>
                   </AnchorPane>
                </content>

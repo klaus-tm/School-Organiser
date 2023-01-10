@@ -7,27 +7,31 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class menuTema implements Initializable {
     //addTema
     public ChoiceBox<String> alegeAddDisciplina;
     public TextArea textDetalii;
-    public TextField textTermen;
+    public DatePicker alegeTermen;
 
     //Teme Table
     public TableView<Tema> tabelTeme;
         public TableColumn<Tema, String> disciplinaTema;
         public TableColumn<Tema, String> detaliiTema;
-        public TableColumn<Tema, String> termenTema;
+        public TableColumn<Tema, Date> termenTema;
         public TableColumn<Tema, Boolean> terminataTema;
 
     //deleteTema
     public ChoiceBox<String> alegeDeleteDisciplina;
-    public TextField textDeleteTermen;
+    public ChoiceBox<String> alegeDeleteTema;
+
 
     public void generareTabelSiChoiceuri() {
         try {
@@ -38,7 +42,7 @@ public class menuTema implements Initializable {
             Statement statementTabelTeme = connectdbTabelTeme.createStatement();
             ResultSet resultSetTabelTeme = statementTabelTeme.executeQuery(querryTabelTeme);
             while(resultSetTabelTeme.next()) {
-                tabelTeme.add(new Tema(resultSetTabelTeme.getString("Disciplina"), resultSetTabelTeme.getString("DetaliiTema"), resultSetTabelTeme.getString("Termen"), resultSetTabelTeme.getBoolean("Terminata")));
+                tabelTeme.add(new Tema(resultSetTabelTeme.getString("Disciplina"), resultSetTabelTeme.getString("DetaliiTema"), resultSetTabelTeme.getDate("Termen"), resultSetTabelTeme.getBoolean("Terminata")));
             }
             for(Tema tema: tabelTeme) {
                 this.tabelTeme.getItems().add(tema);
@@ -63,7 +67,7 @@ public class menuTema implements Initializable {
             List<String> deleteNumeDiscipline = new ArrayList<>();
             DatabaseConnection connectionDeleteNumeDiscipline = new DatabaseConnection();
             Connection connectdbDeleteNumeDiscipline = connectionDeleteNumeDiscipline.getConnection();
-            String querryDeleteNumeDiscipline = "select Disciplina from tema where terminata = 0";
+            String querryDeleteNumeDiscipline = "select Disciplina from tema where terminata = 0 group by Disciplina";
             Statement statementDeleteNumeDiscipline = connectdbDeleteNumeDiscipline.createStatement();
             ResultSet resultSetDeleteNumeDiscipline = statementDeleteNumeDiscipline.executeQuery(querryDeleteNumeDiscipline);
             while (resultSetDeleteNumeDiscipline.next()) {
@@ -86,61 +90,134 @@ public class menuTema implements Initializable {
         terminataTema.setCellValueFactory(new PropertyValueFactory<>("Terminata"));
 
         generareTabelSiChoiceuri();
+        alegeDeleteDisciplina.setOnAction(this::setDeteteTema);
+
+        alegeTermen.setOnAction(e->{
+            LocalDate myDate = alegeTermen.getValue();
+            String format = myDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+            if(myDate.isBefore(LocalDate.now())){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Probleme boss");
+                alert.setHeaderText("Temele nu au termen in trecut.");
+                alert.showAndWait();
+                alegeTermen.getEditor().clear();
+            }
+        });
+    }
+
+    private void setDeteteTema(ActionEvent actionEvent) {
+        try {
+            alegeDeleteTema.getItems().clear();
+            DatabaseConnection connection = new DatabaseConnection();
+            Connection connectdb = connection.getConnection();
+            String querry = "select detaliiTema from tema where terminata = 0 and disciplina like ('" + alegeDeleteDisciplina.getValue() + "')";
+            Statement statement = connectdb.createStatement();
+            ResultSet resultSet = statement.executeQuery(querry);
+            while (resultSet.next()){
+                alegeDeleteTema.getItems().add(resultSet.getString("detaliiTema"));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void addTema(ActionEvent actionEvent) {
-        try {
-            DatabaseConnection connection = new DatabaseConnection();
-            Connection connectdb = connection.getConnection();
-            PreparedStatement querry = connectdb.prepareStatement("insert into tema(Disciplina, DetaliiTema, Termen, Terminata) values (?, ?, ?, ?)");
-            querry.setString(1, alegeAddDisciplina.getValue());
-            querry.setString(2, textDetalii.getText());
-            querry.setString(3, textTermen.getText());
-            querry.setBoolean(4, false);
-            querry.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(alegeAddDisciplina.getSelectionModel().isEmpty() || textDetalii.getText().isBlank() || alegeTermen.getValue() == null){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Probleme boss");
+            alert.setHeaderText("N-ai introdus toate datele necesare!");
+            alert.showAndWait();
+
+            tabelTeme.getItems().clear();
+            alegeAddDisciplina.getItems().clear();
+            alegeDeleteDisciplina.getItems().clear();
+            textDetalii.clear();
+            alegeTermen.getEditor().clear();
+            generareTabelSiChoiceuri();
         }
-        tabelTeme.getItems().clear();
-        alegeAddDisciplina.getItems().clear();
-        alegeDeleteDisciplina.getItems().clear();
-        textDetalii.clear(); textTermen.clear();
-        generareTabelSiChoiceuri();
+        else {
+            try {
+                DatabaseConnection connection = new DatabaseConnection();
+                Connection connectdb = connection.getConnection();
+                PreparedStatement querry = connectdb.prepareStatement("insert into tema(Disciplina, DetaliiTema, Termen, Terminata) values (?, ?, ?, ?)");
+                querry.setString(1, alegeAddDisciplina.getValue());
+                querry.setString(2, textDetalii.getText());
+                querry.setDate(3, Date.valueOf(alegeTermen.getValue()));
+                querry.setBoolean(4, false);
+                querry.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Felicitari boss");
+            alert.setHeaderText("Tema a fost adaugata!");
+            alert.showAndWait();
+
+            tabelTeme.getItems().clear();
+            alegeAddDisciplina.getItems().clear();
+            alegeDeleteDisciplina.getItems().clear();
+            textDetalii.clear();
+            alegeTermen.getEditor().clear();
+            generareTabelSiChoiceuri();
+        }
     }
 
     public void deleteTema(ActionEvent actionEvent) {
-        try {
-            DatabaseConnection connection = new DatabaseConnection();
-            Connection connectdb = connection.getConnection();
-            PreparedStatement querry = connectdb.prepareStatement("update tema set terminata = 1 where disciplina = ? and termen = ?");
-            querry.setString(1, alegeDeleteDisciplina.getValue());
-            querry.setString(2, textDeleteTermen.getText());
-            querry.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(alegeDeleteDisciplina.getSelectionModel().isEmpty() || alegeDeleteTema.getSelectionModel().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Probleme boss");
+            alert.setHeaderText("N-ai selectat tot ce trebuia!");
+            alert.showAndWait();
+
+            tabelTeme.getItems().clear();
+            alegeAddDisciplina.getItems().clear();
+            alegeDeleteDisciplina.getItems().clear();
+            alegeDeleteTema.getItems().clear();
+            generareTabelSiChoiceuri();
         }
-        tabelTeme.getItems().clear();
-        alegeAddDisciplina.getItems().clear();
-        alegeDeleteDisciplina.getItems().clear();
-        textDeleteTermen.clear();
-        generareTabelSiChoiceuri();
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    DatabaseConnection connection = new DatabaseConnection();
-                    Connection connectdb = connection.getConnection();
-                    Statement statement = connectdb.createStatement();
-                    String querry = "delete from tema where terminata = 1";
-                    statement.executeUpdate(querry);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                tabelTeme.getItems().clear();
-                generareTabelSiChoiceuri();
+        else{
+            try {
+                DatabaseConnection connection = new DatabaseConnection();
+                Connection connectdb = connection.getConnection();
+                PreparedStatement querry = connectdb.prepareStatement("update tema set terminata = 1 where disciplina = ? and DetaliiTema = ?");
+                querry.setString(1, alegeDeleteDisciplina.getValue());
+                querry.setString(2, alegeDeleteTema.getValue());
+                querry.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        };
-        timer.schedule(task, 10000);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Felicitari boss");
+            alert.setHeaderText("Tema a fost matcata ca terminata!");
+            alert.showAndWait();
+
+            tabelTeme.getItems().clear();
+            alegeAddDisciplina.getItems().clear();
+            alegeDeleteDisciplina.getItems().clear();
+            alegeDeleteTema.getItems().clear();
+            generareTabelSiChoiceuri();
+
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+                        DatabaseConnection connection = new DatabaseConnection();
+                        Connection connectdb = connection.getConnection();
+                        Statement statement = connectdb.createStatement();
+                        String querry = "delete from tema where terminata = 1";
+                        statement.executeUpdate(querry);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    tabelTeme.getItems().clear();
+                    generareTabelSiChoiceuri();
+                }
+            };
+            timer.schedule(task, 10000);
+        }
+
     }
 }

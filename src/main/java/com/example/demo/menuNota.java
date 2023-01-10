@@ -29,6 +29,7 @@ public class menuNota implements Initializable {
 
     //deleteNota
     public ChoiceBox<String> alegeDeleteDisciplina;
+    public ChoiceBox<Double> alegeDeleteNota;
 
     public void generareTabelSiChoiceuri() {
         try {
@@ -64,7 +65,7 @@ public class menuNota implements Initializable {
             List<String> deleteNumeDiscipline = new ArrayList<>();
             DatabaseConnection connectionDeleteNumeDiscipline = new DatabaseConnection();
             Connection connectdbDeleteNumeDiscipline = connectionDeleteNumeDiscipline.getConnection();
-            String querryDeleteNumeDiscipline = "select Disciplina from nota";
+            String querryDeleteNumeDiscipline = "select Disciplina from nota group by Disciplina";
             Statement statementDeleteNumeDiscipline = connectdbDeleteNumeDiscipline.createStatement();
             ResultSet resultSetDeleteNumeDiscipline = statementDeleteNumeDiscipline.executeQuery(querryDeleteNumeDiscipline);
             while (resultSetDeleteNumeDiscipline.next()) {
@@ -76,7 +77,10 @@ public class menuNota implements Initializable {
             }
             statementDeleteNumeDiscipline.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Probleme boss");
+            alert.setHeaderText("A intervenit o problema! Operatiunea a fost anulata!");
+            alert.showAndWait();
         }
     }
     @Override
@@ -87,41 +91,108 @@ public class menuNota implements Initializable {
         peste5Nota.setCellValueFactory(new PropertyValueFactory<>("Peste5"));
 
         generareTabelSiChoiceuri();
+        alegeDeleteDisciplina.setOnAction(this::setDeleteNota);
+    }
+
+    private void setDeleteNota(ActionEvent actionEvent) {
+        try {
+            DatabaseConnection connection = new DatabaseConnection();
+            Connection connectdb = connection.getConnection();
+            String querry = "select nota from nota where disciplina like ('" + alegeDeleteDisciplina.getValue() + "')";
+            Statement statement = connectdb.createStatement();
+            ResultSet resultSet = statement.executeQuery(querry);
+            while (resultSet.next()){
+                alegeDeleteNota.getItems().add(resultSet.getDouble("nota"));
+            }
+        } catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Probleme boss");
+            alert.setHeaderText("A intervenit o problema! Operatiunea a fost anulata!");
+            alert.showAndWait();
+        }
     }
 
     public void addNota(ActionEvent actionEvent) {
-        try {
-            DatabaseConnection connection = new DatabaseConnection();
-            Connection connectdb = connection.getConnection();
-            PreparedStatement querry = connectdb.prepareStatement("insert into nota(Disciplina, DetaliiNota, Nota, Peste5) values (?, ?, ?, ?)");
-            querry.setString(1, alegeAddDisciplina.getValue());
-            querry.setString(2, textDetalii.getText());
-            querry.setDouble(3, Double.parseDouble(textNota.getText()));
-            querry.setBoolean(4, new Nota(alegeAddDisciplina.getValue(), textDetalii.getText(), Double.parseDouble(textNota.getText())).isPeste5());
-            querry.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(alegeAddDisciplina.getSelectionModel().isEmpty() || textDetalii.getText().isBlank() || textNota.getText().isBlank()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Probleme boss");
+            alert.setHeaderText("N-ai introdus toate datele necesare!");
+            alert.showAndWait();
+
+            tabelNote.getItems().clear();
+            alegeAddDisciplina.getItems().clear();
+            alegeDeleteDisciplina.getItems().clear();
+            textDetalii.clear(); textNota.clear();
+            generareTabelSiChoiceuri();
         }
-        tabelNote.getItems().clear();
-        alegeAddDisciplina.getItems().clear();
-        alegeDeleteDisciplina.getItems().clear();
-        textDetalii.clear(); textNota.clear();
-        generareTabelSiChoiceuri();
+        else {
+            try {
+                DatabaseConnection connection = new DatabaseConnection();
+                Connection connectdb = connection.getConnection();
+                PreparedStatement querry = connectdb.prepareStatement("insert into nota(Disciplina, DetaliiNota, Nota, Peste5) values (?, ?, ?, ?)");
+                querry.setString(1, alegeAddDisciplina.getValue());
+                querry.setString(2, textDetalii.getText());
+                querry.setDouble(3, Double.parseDouble(textNota.getText()));
+                querry.setBoolean(4, new Nota(alegeAddDisciplina.getValue(), textDetalii.getText(), Double.parseDouble(textNota.getText())).isPeste5());
+                querry.executeUpdate();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Felicitari boss");
+                alert.setHeaderText("Nota a fost adaugata!");
+                alert.showAndWait();
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Probleme boss");
+                alert.setHeaderText("A intervenit o problema! Operatiunea a fost anulata!");
+                alert.showAndWait();
+            }
+
+            tabelNote.getItems().clear();
+            alegeAddDisciplina.getItems().clear();
+            alegeDeleteDisciplina.getItems().clear();
+            textDetalii.clear(); textNota.clear();
+            generareTabelSiChoiceuri();
+        }
     }
 
     public void deleteNota(ActionEvent actionEvent) {
-        try {
-            DatabaseConnection connection = new DatabaseConnection();
-            Connection connectdb = connection.getConnection();
-            Statement statement = connectdb.createStatement();
-            String querry = "delete from nota where Disciplina = '" + alegeDeleteDisciplina.getValue() + "'";
-            statement.executeUpdate(querry);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(alegeAddDisciplina.getSelectionModel().isEmpty() || alegeDeleteNota.getSelectionModel().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Probleme boss");
+            alert.setHeaderText("N-ai selectat tot ce trebuia!");
+            alert.showAndWait();
+
+            tabelNote.getItems().clear();
+            alegeAddDisciplina.getItems().clear();
+            alegeDeleteDisciplina.getItems().clear();
+            alegeDeleteNota.getItems().clear();
+            generareTabelSiChoiceuri();
         }
-        tabelNote.getItems().clear();
-        alegeAddDisciplina.getItems().clear();
-        alegeDeleteDisciplina.getItems().clear();
-        generareTabelSiChoiceuri();
+        else{
+            try {
+                DatabaseConnection connection = new DatabaseConnection();
+                Connection connectdb = connection.getConnection();
+                PreparedStatement querry = connectdb.prepareStatement("delete from nota where Disciplina = ? and nota = ?");
+                querry.setString(1, alegeDeleteDisciplina.getValue());
+                querry.setDouble(2, alegeDeleteNota.getValue());
+                querry.executeUpdate();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Felicitari boss");
+                alert.setHeaderText("Nota a fost stearsa!");
+                alert.showAndWait();
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Probleme boss");
+                alert.setHeaderText("A intervenit o problema! Operatiunea a fost anulata!");
+                alert.showAndWait();
+            }
+
+            tabelNote.getItems().clear();
+            alegeAddDisciplina.getItems().clear();
+            alegeDeleteDisciplina.getItems().clear();
+            alegeDeleteNota.getItems().clear();
+            generareTabelSiChoiceuri();
+        }
     }
 }

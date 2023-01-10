@@ -19,9 +19,9 @@
    <children>
       <TabPane prefHeight="500.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab style="-fx-background-color: #3E6D9C; -fx-border-color: transparent; -fx-text-fill: white;" text="Adauga nota">
+          <Tab style="-fx-background-color: #5F8D4E; -fx-border-color: transparent; -fx-text-fill: white;" text="Adauga nota">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #3E6D9C; -fx-border-color: transparent;">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: CCD6A6; -fx-border-color: transparent;">
                      <children>
                         <Label alignment="CENTER" layoutX="77.0" layoutY="47.0" prefHeight="22.0" prefWidth="222.0" text="Selecteaza Disciplina" textAlignment="CENTER">
                            <font>
@@ -60,11 +60,11 @@
                   </ImageView>
                </graphic>
           </Tab>
-          <Tab style="-fx-background-color: #3E6D9C; -fx-border-color: transparent; -fx-text-fill: white;" text="Note curente">
+          <Tab style="-fx-background-color: #5F8D4E; -fx-border-color: transparent; -fx-text-fill: white;" text="Note curente">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tabelNote" prefHeight="471.0" prefWidth="600.0" style="-fx-background-color: #3E6D9C;">
+                        <TableView fx:id="tabelNote" prefHeight="471.0" prefWidth="600.0" style="-fx-background-color: CCD6A6;">
                           <columns>
                             <TableColumn fx:id="disciplinaNota" minWidth="150.0" prefWidth="75.0" text="Disciplina" />
                             <TableColumn fx:id="detaliiNota" minWidth="150.0" prefWidth="75.0" text="Detalii Nota" />
@@ -82,16 +82,22 @@
                   </ImageView>
                </graphic>
           </Tab>
-            <Tab style="-fx-background-color: #3E6D9C; -fx-border-color: transparent; -fx-text-fill: white;" text="Sterge nota">
+            <Tab style="-fx-background-color: #5F8D4E; -fx-border-color: transparent; -fx-text-fill: white;" text="Sterge nota">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #3E6D9C; -fx-border-color: transparent;">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: CCD6A6; -fx-border-color: transparent;">
                      <children>
-                        <Label alignment="CENTER" layoutX="15.0" layoutY="151.0" prefHeight="22.0" prefWidth="338.0" text="Selecteaza Disciplina Notei pe care o stergi" textAlignment="CENTER">
+                        <Label alignment="CENTER" layoutX="15.0" layoutY="90.0" prefHeight="22.0" prefWidth="338.0" text="Selecteaza Disciplina Notei pe care o stergi" textAlignment="CENTER">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="16.0" />
                            </font>
                         </Label>
-                        <ChoiceBox fx:id="alegeDeleteDisciplina" layoutX="15.0" layoutY="200.0" prefHeight="22.0" prefWidth="338.0" style="-fx-background-radius: 20;" />
+                        <ChoiceBox fx:id="alegeDeleteDisciplina" layoutX="15.0" layoutY="120.0" prefHeight="22.0" prefWidth="338.0" style="-fx-background-radius: 20;" />
+                        <Label alignment="CENTER" layoutX="59.0" layoutY="190.0" prefHeight="22.0" prefWidth="251.0" text="Selecteaza nota pe care o stergi" textAlignment="CENTER">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="alegeDeleteNota" layoutX="59.0" layoutY="220.0" prefWidth="251.0" style="-fx-background-radius: 20;" />
                         <Button layoutX="156.0" layoutY="276.0" mnemonicParsing="false" onAction="#deleteNota" prefHeight="25.0" prefWidth="57.0" style="-fx-background-color: red; -fx-background-insets: 0; -fx-background-radius: 30; -fx-text-fill: white;" text="Sterge" />
                         <ImageView fitHeight="486.0" fitWidth="560.0" layoutX="373.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="371.0" AnchorPane.rightAnchor="-258.0" AnchorPane.topAnchor="-1.0">
                            <image>
